@@ -337,9 +337,11 @@ nameserver 192.238.1.2
 nameserver 192.238.2.2 
 ```
 Coba mematikan bind9 di sriwijaya
+
 ![image](https://github.com/user-attachments/assets/b800c1e3-f075-44fe-a0c0-d63909aad5d3)
 
 Mencoba ping di client setelah bind9 sriwijaya mati
+
 ![image](https://github.com/user-attachments/assets/53fb22d5-76d1-4a7f-9ea9-53a0ae3c8ccc)
 
 8. Kamu juga diperintahkan untuk membuat subdomain khusus melacak kekuatan tersembunyi di Ohio dengan subdomain cakra.sudarsana.xxxx.com yang mengarah ke Bedahulu.
@@ -508,3 +510,32 @@ Di client Server :
 
     2. ping www.log.panah.pasopati.it43.com
 ![image](https://github.com/user-attachments/assets/1a622523-e684-4e8a-ba1a-6d06873fb1a9)
+
+11. Setelah pertempuran mereda, warga IT dapat kembali mengakses jaringan luar dan menikmati meme brainrot terbaru, tetapi hanya warga Majapahit saja yang dapat mengakses jaringan luar secara langsung. Buatlah konfigurasi agar warga IT yang berada diluar Majapahit dapat mengakses jaringan luar melalui DNS Server Majapahit.
+
+Di Majapahit/Sriwijaya :
+
+    1. nano /etc/bind/named.conf.options
+```
+options {
+    directory "/var/cache/bind";
+
+    forwarders { 192.168.122.1; };
+
+    //dnssec-validation auto;
+    allow-query{any;};
+
+    auth-nxdomain no;    # conform to RFC1035
+    listen-on-v6 { any; };
+};
+```
+    2. service bind9 restart 
+DI Client :
+
+    1. ping google.com 
+
+![image](https://github.com/user-attachments/assets/cf160245-5bf7-434b-ab4c-28aed42aa6f9)
+
+12. Karena pusat ingin sebuah laman web yang ingin digunakan untuk memantau kondisi kota lainnya maka deploy laman web ini (cek resource yg lb) pada Kotalingga menggunakan apache.
+
+
