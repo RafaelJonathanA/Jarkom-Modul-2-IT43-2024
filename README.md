@@ -801,9 +801,9 @@ ServerAdmin webmaster@localhost
 DocumentRoot /var/www/pasopati-it43 #ubah document rootnya
 
 ```
-    4. nano /etc/apache2/ports,conf
+    4. nano /etc/apache2/ports.conf
 ```
-listen 8080
+listen 80
 ```
     5. mkdir /var/www/pasopati.it43.com
     6. service apache2 reload && service apache2 start
