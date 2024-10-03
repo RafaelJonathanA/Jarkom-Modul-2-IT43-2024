@@ -856,7 +856,7 @@ Di client :
 
 ![image](https://github.com/user-attachments/assets/57445bb3-c09c-4191-9edd-4e8f97fab5a6)
 
-13. 
+13. Karena Sriwijaya dan Majapahit memenangkan pertempuran ini dan memiliki banyak uang dari hasil penjarahan (sebanyak 35 juta, belum dipotong pajak) maka pusat meminta kita memasang load balancer untuk membagikan uangnya pada web nya, dengan Kotalingga, Bedahulu, Tanjungkulai sebagai worker dan Solok sebagai Load Balancer menggunakan apache sebagai web server nya dan load balancer nya.
 
 Di Solok :
     
@@ -885,7 +885,9 @@ a2enmod lbmethod_byrequests
 </VirtualHost>
 ```
 Di Webserver :
+
 Bendahulu: 
+
     1. cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/sudarsana.it43.com.conf
     2. nano /etc/apache2/sites-available/sudarsana.it43.com.conf
 ```
@@ -900,6 +902,7 @@ ServerAlias www.sudarsana.it43.com
     3. Buat dan jalankan configapa.sh dengan mengganti domainnya menjadi sudarsana
 
 Tanjungkulai :
+
     1. cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/rujapala.it43.com.conf
     2. nano /etc/apache2/sites-available/rujapala.it43.com.conf
 ```
@@ -923,12 +926,15 @@ Di Client :
 ![image](https://github.com/user-attachments/assets/befccfb5-5229-4cf3-be29-df60eedcec62)
 
 
-14. 
+14. Selama melakukan penjarahan mereka melihat bagaimana web server luar negeri, hal ini membuat mereka iri, dengki, sirik dan ingin flexing sehingga meminta agar web server dan load balancer nya diubah menjadi nginx.
+
 
 Di Webserver :
+
     1. apt-get install nginx php-fpm -y
 
 Di Kotalingga :
+
     1. nano /etc/nginx/sites-available/pasopati.it43.com
 ```
 server {
