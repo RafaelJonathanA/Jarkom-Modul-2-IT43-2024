@@ -715,7 +715,7 @@ www     IN      CNAME   panah.pasopati.it43.com.
 
 Di client server :
 
-    1. ping panah.senopati.it43.com
+    1. ping panah.pasopati.it43.com
 
 ![image](https://github.com/user-attachments/assets/04ce72d1-6c51-47e6-9a36-4ac49cf21806)
 
@@ -798,7 +798,9 @@ apt install zip
 <VirtualHost *:80> 
 
 ServerAdmin webmaster@localhost
-DocumentRoot /var/www/pasopati-it43 #ubah document rootnya
+DocumentRoot /var/www/pasopati.it43.com #ubah document rootnya
+ServerName pasopati.it43.com
+ServerAlias www.pasopati.it43.com
 
 ```
     4. nano /etc/apache2/ports.conf
@@ -853,3 +855,201 @@ Di client :
     2. lynx pasopati.it43.com atau lynx 192.238.1.6 
 
 ![image](https://github.com/user-attachments/assets/57445bb3-c09c-4191-9edd-4e8f97fab5a6)
+
+13. 
+
+Di Solok :
+    
+    1. nano install.sh 
+```
+apt-get update && apt-get install apache2 -y
+
+a2enmod proxy
+a2enmod proxy_balancer
+a2enmod proxy_http
+a2enmod lbmethod_byrequests
+```
+    2. nano /etc/apache2/sites-available/000-default.conf
+```
+<VirtualHost *:80>
+    <Proxy balancer://mycluster>
+        BalancerMember http://192.238.1.4
+        BalancerMember http://192.238.1.5
+        BalancerMember http://192.238.1.6
+        ProxySet lbmethod=byrequests
+    </Proxy>
+
+    ProxyPass / balancer://mycluster/
+    ProxyPassReverse / balancer://mycluster/
+
+</VirtualHost>
+```
+Di Webserver :
+Bendahulu: 
+    1. cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/sudarsana.it43.com.conf
+    2. nano /etc/apache2/sites-available/sudarsana.it43.com.conf
+```
+<VirtualHost *:80> 
+
+ServerAdmin webmaster@localhost
+DocumentRoot /var/www/sudarsana.it43.com #ubah document rootnya
+ServerName sudarsana.it43.com
+ServerAlias www.sudarsana.it43.com
+
+```
+    3. Buat dan jalankan configapa.sh dengan mengganti domainnya menjadi sudarsana
+
+Tanjungkulai :
+    1. cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/rujapala.it43.com.conf
+    2. nano /etc/apache2/sites-available/rujapala.it43.com.conf
+```
+<VirtualHost *:80> 
+
+ServerAdmin webmaster@localhost
+DocumentRoot /var/www/rujapala.it43.com #ubah document rootnya
+ServerName rujapala.it43.com
+ServerAlias www.rujapala.it43.com
+```
+    3. Buat dan jalankan configapa.sh dengan mengganti domainnya menjadi rujapala
+
+Di Client :
+
+    1. Test Bendahulu
+
+![image](https://github.com/user-attachments/assets/9452927f-7160-433d-876e-50ebf42a4fdf)
+
+    2. Test Tanjungkulai
+
+![image](https://github.com/user-attachments/assets/befccfb5-5229-4cf3-be29-df60eedcec62)
+
+
+14. 
+
+Di Webserver :
+    1. apt-get install nginx php-fpm -y
+
+Di Kotalingga :
+    1. nano /etc/nginx/sites-available/pasopati.it43.com
+```
+server {
+    listen 80;
+
+    root /var/www/pasopati.it43.com;
+
+    index index.php index.html index.htm;
+    server_name _ pasopati.it43.com www.pasopati.it43.com;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    # pass PHP scripts to FastCGI server
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+}
+```
+    2. ln -s /etc/nginx/sites-available/pasopati.it43.com /etc/nginx/sites-enabled/pasopati.it43.com
+    3. rm /etc/nginx/sites-enabled/default
+    4. service nginx restart
+    5. service php7.0-fpm start
+
+Di Bedahulu :
+    1. nano /etc/nginx/sites-available/sudarsana.it43.com
+```
+server {
+    listen 80;
+
+    root /var/www/sudarsana.it43.com;
+
+    index index.php index.html index.htm;
+    server_name _ sudarsana.it43.com www.sudarsana.it43.com;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    # pass PHP scripts to FastCGI server
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+}
+```
+    2. ln -s /etc/nginx/sites-available/sudarsana.it43.com /etc/nginx/sites-enabled/sudarsana.it43.com
+    3. rm /etc/nginx/sites-enabled/default
+    4. service nginx restart
+    5. service php7.0-fpm start
+
+Di Tanjungkulai :
+    1. nano /etc/nginx/sites-available/rujapala.it43.com
+```
+server {
+    listen 80;
+
+    root /var/www/rujapala.it43.com;
+
+    index index.php index.html index.htm;
+    server_name _ rujapala.it43.com www.rujapala.it43.com;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    # pass PHP scripts to FastCGI server
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+}
+```
+    2. ln -s /etc/nginx/sites-available/rujapala.it43.com /etc/nginx/sites-enabled/rujapala.it43.com
+    3. rm /etc/nginx/sites-enabled/default
+    4. service nginx restart
+    5. service php7.0-fpm start
+
+Di Solok :
+    1. apt-get install nginx -y
+    2. nano /etc/nginx/sites-available/solok
+```
+upstream webserver  {
+    server 192.238.1.4;
+    server 192.238.1.5;
+    server 192.238.1.6;
+}
+
+server {
+    listen 80;
+    server_name _;
+
+    location / {
+        proxy_pass http://webserver;
+    }
+}
+```
+    3. ln -s /etc/nginx/sites-available/solok /etc/nginx/sites-enabled/solok
+    4. rm /etc/nginx/sites-enabled/default
+    5. service nginx restart
+
+DI Client :
+
+    1. Test lynx 192.238.2.3 (Solok)
+
+![image](https://github.com/user-attachments/assets/9b47d20f-ca0c-4c14-92ff-d518b427140a)
+
+![image](https://github.com/user-attachments/assets/9b9f0a7f-7c8b-43e7-8f07-ef2b8fef8f06)
+
+![image](https://github.com/user-attachments/assets/988fc807-b8ea-4cc3-934e-2370fb5aed82)
