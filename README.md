@@ -13,6 +13,247 @@
 ---
 ---
 ---
+Script 
+- install.sh (Sriwijaya dan Majapahit)
+```
+apt-get update
+apt-get install bind9 -y
+```
+
+- configm.sh (Sriwijaya)
+```
+echo "Konfigurasi Sudarsana..."
+  cat <<EOL > /etc/bind/named.conf.local
+zone "sudarsana.it43.com" {
+    type master;
+    notify yes;
+    also-notify { 192.238.2.2; };
+    allow-transfer { 192.238.2.2; };
+    file "/etc/bind/it43/sudarsana.it43.com";
+};
+
+zone "pasopati.it43.com" {
+    type master;
+    notify yes;
+    also-notify { 192.238.2.2; };
+    allow-transfer { 192.238.2.2; };
+    file "/etc/bind/it43/pasopati.it43.com";
+};
+
+zone "rujapala.it43.com" {
+    type master;
+    notify yes;
+    also-notify { 192.238.2.2; };
+    allow-transfer { 192.238.2.2; };
+    file "/etc/bind/it43/rujapala.it43.com";
+};
+
+zone "1.238.192.in-addr.arpa" {
+    type master;
+    file "/etc/bind/it43/1.238.192.in-addr.arpa";
+};
+EOL
+
+  echo "Restarting BIND service on Sudarsana..."
+  service bind9 restart
+```
+
+- configs.sh (Majapahit)
+```
+echo "Konfigurasi Majapahit..."
+  cat <<EOL > /etc/bind/named.conf.local
+zone "sudarsana.it43.com" {
+    type slave;
+    masters { 192.238.1.2; };
+    file "/var/lib/bind/sudarsana.it43.com";
+};
+
+zone "pasopati.it43.com" {
+    type slave;
+    masters { 192.238.1.2; };
+    file "/var/lib/bind/pasopati.it43.com";
+};
+
+zone "rujapala.it43.com" {
+    type slave;
+    masters { 192.238.1.2; };
+    file "/var/lib/bind/rujapala.it43.com";
+};
+
+zone "panah.pasopati.it43.com" {
+    type master;
+    file "/etc/bind/panah/panah.pasopati.it43.com";
+};
+EOL
+
+  echo "Restarting BIND service on Majapahit..."
+  service bind9 restart
+```
+
+- dnsconf.sh (sriwijaya)
+```
+#!/bin/bash
+
+# Script untuk konfigurasi file zone pada BIND
+
+# Buat direktori /etc/bind/it43 jika belum ada
+mkdir -p /etc/bind/it43
+
+# Konfigurasi sudarsana.it43.com
+echo "Mengonfigurasi sudarsana.it43.com..."
+cp /etc/bind/db.local /etc/bind/it43/sudarsana.it43.com
+cat <<EOL > /etc/bind/it43/sudarsana.it43.com
+;
+; BIND data file for sudarsana.it43.com
+;
+\$TTL    604800
+@       IN      SOA     sudarsana.it43.com. root.sudarsana.it43.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      sudarsana.it43.com.
+@       IN      A       192.238.2.3
+@       IN      AAAA    ::1
+www     IN      CNAME   sudarsana.it43.com.
+cakra   IN      A       192.238.1.5
+EOL
+
+# Konfigurasi pasopati.it43.com
+echo "Mengonfigurasi pasopati.it43.com..."
+cp /etc/bind/db.local /etc/bind/it43/pasopati.it43.com
+cat <<EOL > /etc/bind/it43/pasopati.it43.com
+;
+; BIND data file for pasopati.it43.com
+;
+\$TTL    604800
+@       IN      SOA     pasopati.it43.com. root.pasopati.it43.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      pasopati.it43.com.
+@       IN      A       192.238.1.6
+@       IN      AAAA    ::1
+www     IN      CNAME   pasopati.it43.com.
+ns1     IN      A       192.238.2.2
+panah   IN      NS      ns1
+EOL
+
+# Konfigurasi rujapala.it43.com
+echo "Mengonfigurasi rujapala.it43.com..."
+cp /etc/bind/db.local /etc/bind/it43/rujapala.it43.com
+cat <<EOL > /etc/bind/it43/rujapala.it43.com
+;
+; BIND data file for rujapala.it43.com
+;
+\$TTL    604800
+@       IN      SOA     rujapala.it43.com. root.rujapala.it43.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      rujapala.it43.com.
+@       IN      A       192.238.1.4
+@       IN      AAAA    ::1
+www     IN      CNAME   rujapala.it43.com.
+EOL
+
+# Konfigurasi 1.238.192.in-addr.arpa
+echo "Mengonfigurasi 1.238.192.in-addr.arpa..."
+cp /etc/bind/db.local /etc/bind/it43/1.238.192.in-addr.arpa
+cat <<EOL > /etc/bind/it43/1.238.192.in-addr.arpa
+;
+; BIND data file for 1.238.192.in-addr.arpa
+;
+\$TTL    604800
+@       IN      SOA     pasopati.it43.com. root.pasopati.it43.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+1.238.192.in-addr.arpa.   IN  NS      pasopati.it43.com.
+6                       IN  PTR     pasopati.it43.com.
+EOL
+service bind9 restart
+echo "Konfigurasi selesai!"
+```
+
+- dnsconf (Majapahit)
+```
+#!/bin/bash
+
+# Script untuk konfigurasi file zone pada BIND untuk panah.pasopati.it43.com
+
+# Buat direktori /etc/bind/panah jika belum ada
+mkdir -p /etc/bind/panah
+
+# Konfigurasi panah.pasopati.it43.com
+echo "Mengonfigurasi panah.pasopati.it43.com..."
+cp /etc/bind/db.local /etc/bind/panah/panah.pasopati.it43.com
+cat <<EOL > /etc/bind/panah/panah.pasopati.it43.com
+;
+; BIND data file for panah.pasopati.it43.com
+;
+\$TTL    604800
+@       IN      SOA     panah.pasopati.it43.com. root.panah.pasopati.it43.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      panah.pasopati.it43.com.
+@       IN      A       192.238.1.6
+@       IN      AAAA    ::1
+www     IN      CNAME   panah.pasopati.it43.com.
+log     IN      A       192.238.1.6
+www.log IN      CNAME   panah.pasopati.it43.com.
+EOL
+
+# Restart layanan BIND
+echo "Restarting BIND service..."
+service bind9 restart
+
+echo "Konfigurasi selesai!"
+```
+
+- configop.sh (Sriwijaya dan Majapahit)
+```
+#!/bin/bash
+
+# Script untuk konfigurasi file named.conf.options pada BIND
+
+# Konfigurasi named.conf.options
+echo "Mengonfigurasi named.conf.options..."
+cat <<EOL > /etc/bind/named.conf.options
+options {
+    directory "/var/cache/bind";
+
+    forwarders { 192.168.122.1; };
+
+    //dnssec-validation auto;
+    allow-query{any;};
+
+    auth-nxdomain no;    # conform to RFC1035
+    listen-on-v6 { any; };
+};
+EOL
+
+# Restart layanan BIND
+echo "Restarting BIND service..."
+service bind9 restart
+
+echo "Konfigurasi selesai!"
+```
 
 1. Untuk mempersiapkan peperangan World War MMXXIV (Iya sebanyak itu), Sriwijaya membuat dua kotanya menjadi web server yaitu Tanjungkulai, dan Bedahulu, serta Sriwijaya sendiri akan menjadi DNS Master. Kemudian karena merasa terdesak, Majapahit memberikan bantuan dan menjadikan kerajaannya (Majapahit) menjadi DNS Slave. 
 
