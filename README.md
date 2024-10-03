@@ -966,6 +966,7 @@ server {
     5. service php7.0-fpm start
 
 Di Bedahulu :
+
     1. nano /etc/nginx/sites-available/sudarsana.it43.com
 ```
 server {
@@ -1028,6 +1029,7 @@ server {
     5. service php7.0-fpm start
 
 Di Solok :
+
     1. apt-get install nginx -y
     2. nano /etc/nginx/sites-available/solok
 ```
@@ -1059,3 +1061,206 @@ DI Client :
 ![image](https://github.com/user-attachments/assets/9b9f0a7f-7c8b-43e7-8f07-ef2b8fef8f06)
 
 ![image](https://github.com/user-attachments/assets/988fc807-b8ea-4cc3-934e-2370fb5aed82)
+
+15. Markas pusat meminta laporan hasil benchmark dengan menggunakan apache benchmark dari load balancer dengan 2 web server yang berbeda tersebut dan meminta secara detail dengan ketentuan:
+- Nama Algoritma Load Balancer
+- Report hasil testing apache benchmark 
+- Grafik request per second untuk masing masing algoritma. 
+- Analisis
+- Meme terbaik kalian (terserah ( ͡° ͜ʖ ͡°)) 🤓
+
+Di Solok :
+    
+    1. Pastikan salah satu web server menyala apache2/nginx
+    2. Pengujian yang pertama (Round Robin)tidak perlu ada yang diubah konfigurasinya namun untuk pengujian kedua (Least connection) perlu ada line tambahan yaitu : 
+
+    - nano /etc/nginx/sites-available/solok
+```
+upstream webserver  {
+    least_conn;
+    server 192.238.1.4;
+    server 192.238.1.5;
+    server 192.238.1.6;
+}
+
+server {
+    listen 80;
+    server_name _;
+
+    location / {
+        proxy_pass http://webserver;
+    }
+}
+```
+- nano /etc/nginx/sites-available/solok
+```
+upstream webserver  {
+    ip_hash;
+    server 192.238.1.4;
+    server 192.238.1.5;
+    server 192.238.1.6;
+}
+
+server {
+    listen 80;
+    server_name _;
+
+    location / {
+        proxy_pass http://webserver;
+    }
+}
+```
+
+Di client (HayamWuruk) :
+
+    1. apt-get install apache2-utils
+    2. ab -n 1000 -c 100 http://192.238.2.3/
+
+Hasil Pengujian :
+
+Round Robin
+
+![image](https://github.com/user-attachments/assets/b772583d-caf8-4fa2-9066-5c48a947b969)
+
+Least-Connection 
+
+![image](https://github.com/user-attachments/assets/338e6311-4b74-43db-8e38-6ea0ef2d66c2)
+
+Ip-hash
+
+![image](https://github.com/user-attachments/assets/4c281c28-2614-4992-8dee-b32dd53de4ff)
+
+Hasil :
+
+Round Robin :
+```
+- Concurrency Level: 100
+- Total Requests: 1000
+- Time taken for tests: 0.803 detik
+- Requests per second: 1245.59 [#/sec] (mean)
+    Nginx mampu menangani rata-rata 1245.59 permintaan per detik, sedikit lebih tinggi dibandingkan Apache.
+
+- Time per request:
+    80.283 ms (mean): Waktu rata-rata yang dibutuhkan untuk setiap permintaan. Ini lebih cepat dari Apache (89.632 ms).
+    0.803 ms (mean, across all concurrent requests): Nginx menyelesaikan seluruh permintaan bersamaan sedikit lebih cepat dibandingkan Apache.
+
+- Failed requests: 0
+Tidak ada permintaan yang gagal, menandakan Nginx juga stabil.
+
+- Transfer rate: 417.23 KB/s
+Kecepatan transfer data dari Nginx lebih rendah (417.23 KB/s) dibandingkan Apache, meskipun Nginx memproses lebih banyak permintaan per detik.
+
+- Connection Times:
+    Connect: 3 ms (min), 17 ms (mean), 22 ms (max)
+    Processing: 15 ms (min), 61 ms (mean), 86 ms (max)
+    Waiting: 15 ms (min), 61 ms (mean), 86 ms (max)
+    Total: 29 ms (min), 78 ms (mean), 97 ms (max)
+Waktu koneksi, pemrosesan, dan total di Nginx lebih rendah, menunjukkan Nginx memiliki latensi yang lebih rendah dan lebih responsif dibandingkan Apache.
+
+- Percentage of the requests served within a certain time:
+    50% dari permintaan diselesaikan dalam 84 ms
+    100% dari permintaan diselesaikan dalam 97 ms (permintaan terlama)
+```
+Kesimpulan :
+
+    Round Robin Nginx menghasilkan performa tertinggi dalam hal requests per second yaitu 1245,59, lebih tinggi dibandingkan Apache. Waktu per permintaan juga lebih cepat (80.283 ms), dan latensi keseluruhan lebih rendah. Meskipun transfer rate Nginx lebih rendah (417.23 KB/s), kecepatan pemrosesan dan waktu total menunjukkan Nginx lebih responsif dibandingkan Apache dalam skenario ini. Nginx juga stabil tanpa ada permintaan yang gagal.
+
+Least conn :
+```
+Concurrency Level: 100
+Total Requests: 1000
+Time taken for tests: 1.072 detik
+
+- Requests per second: 932.61 [#/sec] (mean)
+Server berhasil menangani rata-rata 932,61 permintaan per detik dalam pengujian ini.
+
+- Time per request:
+    107.226 ms (mean): Rata-rata waktu yang diambil untuk setiap permintaan. Waktu ini cukup baik dan menunjukkan server mampu menangani permintaan dengan cukup cepat.
+    1.072 ms (mean, across all concurrent requests): Ini menunjukkan bahwa rata-rata waktu yang diambil untuk setiap permintaan di semua permintaan bersamaan adalah 1.072 ms.
+
+- Failed requests: 0
+Tidak ada permintaan yang gagal selama pengujian, menandakan stabilitas server yang baik.
+
+- Transfer rate: 312.39 KB/s
+Kecepatan transfer data dari server mencapai 312.39 KB/s.
+
+Connection Times:
+
+    Connect: 2 ms (min), 16 ms (mean), 34 ms (max)
+Rata-rata waktu yang diperlukan untuk membuat koneksi ke server adalah 16 ms.
+    
+    Processing: 15 ms (min), 33.4 ms (mean), 1025 ms (max)
+Waktu yang diperlukan untuk memproses permintaan berkisar rata-rata 33.4 ms.
+    
+    Waiting: 15 ms (min), 33.4 ms (mean), 1025 ms (max)
+Rata-rata waktu menunggu respon dari server adalah 33.4 ms.
+    
+    Total: 28 ms (min), 76 ms (mean), 1043 ms (max)
+Total waktu rata-rata untuk menyelesaikan permintaan adalah 76 ms.
+
+- Percentage of the requests served within a certain time:
+
+    50% dari permintaan diselesaikan dalam 81 ms
+    100% dari permintaan diselesaikan dalam 1043 ms (permintaan terlama)
+```
+
+Kesimpulan :
+
+    Least Conn Nginx memiliki requests per second terendah dari ketiga pengujian, dengan 932,61 permintaan per detik. Waktu per permintaan juga yang paling lambat (107.226 ms), dan transfer rate-nya adalah yang terendah (312.39 KB/s). Walaupun demikian, stabilitas tetap terjaga tanpa ada permintaan yang gagal. Hasil ini menunjukkan bahwa metode least connection mungkin kurang optimal untuk skenario ini dibandingkan dengan metode round robin, terutama dalam hal kecepatan pemrosesan dan transfer data.
+
+IP-hash :
+```
+1. Concurrency Level: 100
+Ini menunjukkan bahwa 100 permintaan dilakukan secara bersamaan.
+
+2. Time taken for tests: 0.799 detik
+Pengujian ini memakan waktu total 0.799 detik untuk menyelesaikan 1000 permintaan. 
+
+3. Requests per second: 1251.70 [#/sec] (mean)
+Server dapat menangani rata-rata 1251.70 permintaan per detik, menunjukkan kemampuan server yang tinggi untuk menangani banyak permintaan dengan cepat.
+
+4. Time per request:
+    79.892 ms (mean): Rata-rata waktu yang diambil untuk menyelesaikan setiap permintaan adalah 79.892 milidetik. Ini adalah waktu yang cukup cepat.
+    0.799 ms (mean, across all concurrent requests): Rata-rata waktu yang diambil untuk menyelesaikan setiap permintaan dari 100 permintaan yang dilakukan bersamaan adalah 0.799 milidetik.
+
+5. Failed requests: 0
+Tidak ada permintaan yang gagal, yang berarti server bekerja dengan stabil dan menangani semua permintaan dengan sukses.
+
+6. Transfer rate: 419.27 KB/s
+Kecepatan transfer data dari server adalah 419.27 kilobytes per detik, yang cukup baik untuk ukuran file yang relatif kecil.
+
+7. Connection Times (ms):
+    Connect:
+Min: 3 ms, Mean: 18 ms, Max: 33 ms
+Rata-rata waktu yang dihabiskan untuk membuat koneksi ke server adalah 18 ms, dengan waktu minimum 3 ms dan waktu maksimum 33 ms.
+
+    Processing:
+Min: 15 ms, Mean: 9.5 ms, Max: 79 ms
+Proses permintaan di server rata-rata membutuhkan 9.5 ms, dengan waktu proses maksimum hingga 79 ms.
+
+    Waiting:
+Min: 15 ms, Mean: 9.5 ms, Max: 79 ms
+Waktu tunggu untuk mendapatkan respons dari server rata-rata adalah 9.5 ms.
+    
+    Total:
+Min: 37 ms, Mean: 78 ms, Max: 97 ms
+Total waktu rata-rata untuk menyelesaikan permintaan adalah 78 ms, dengan permintaan terlama yang memakan waktu hingga 97 ms.
+
+8. Percentage of the requests served within a certain time (ms):
+    50% dari permintaan diselesaikan dalam 82 ms.
+    100% diselesaikan dalam 97 ms
+```
+Kesimpulan :
+
+    Server ini memiliki performa yang baik, mampu menangani rata-rata 1251.70 permintaan per detik.
+    Waktu respons rata-rata adalah 79.892 ms, yang menunjukkan bahwa server cukup cepat dalam memproses permintaan.
+    Tidak ada permintaan yang gagal, dan semua permintaan diselesaikan dalam waktu yang relatif cepat, dengan permintaan terlama selesai dalam 97 ms.
+    Meskipun kecepatan transfer datanya cukup baik (419.27 KB/s), ini tergantung pada ukuran file yang ditransfer.
+
+Analis :
+
+    IP-Hash Nginx memberikan performa terbaik secara keseluruhan dalam hal requests per second, time per request, dan transfer rate. Waktu koneksi dan pemrosesannya lebih cepat, membuatnya lebih cocok digunakan untuk aplikasi yang membutuhkan kestabilan dan kecepatan tinggi.
+
+    Round Robin Nginx juga memberikan performa yang sangat baik dengan requests per second yang tinggi dan waktu permintaan yang cepat. Ini adalah pilihan yang seimbang, namun sedikit kurang efisien dibandingkan IP-Hash dalam skenario ini.
+
+    Least Conn Nginx menunjukkan performa terendah dalam hal requests per second, time per request, dan transfer rate. Meskipun stabil dan memiliki waktu pemrosesan yang cepat, algoritma ini mungkin kurang optimal untuk skenario yang memerlukan distribusi beban secara merata.
