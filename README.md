@@ -472,6 +472,7 @@ Pastikan : nano /etc/resolv.conf
 6. ping www.pasopati.it43.com -c 2
 ---
 Hasil Ping Pada HayamWuruk :
+
 ![image](https://github.com/user-attachments/assets/b64ffda2-8f7a-454c-8c7c-45f054ed343e)
 ![image](https://github.com/user-attachments/assets/a6ca8f81-3a07-40ea-8974-d7704254a37b)
 
@@ -779,4 +780,76 @@ DI Client :
 
 12. Karena pusat ingin sebuah laman web yang ingin digunakan untuk memantau kondisi kota lainnya maka deploy laman web ini (cek resource yg lb) pada Kotalingga menggunakan apache.
 
+Di kotalingga :
 
+    1. buat install.sh (Kotalingga)
+```
+apt-get update
+apt-get install lynx apache2 php libapache2-mod-php7.0 nginx -y
+apt-get install apache2 -y
+apt-get install libapache2-mod-php7.0 -y
+apt-get install php -y
+apt install wget
+apt install zip
+```
+    2. cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/pasopati.it43.com.conf
+    3. nano /etc/apache2/sites-available/pasopati.it43.com.conf
+```
+<VirtualHost *:80> 
+
+ServerAdmin webmaster@localhost
+DocumentRoot /var/www/pasopati-it43 #ubah document rootnya
+
+```
+    4. nano /etc/apache2/ports,conf
+```
+listen 8080
+```
+    5. mkdir /var/www/pasopati.it43.com
+    6. service apache2 reload && service apache2 start
+    7. a2ensite pasopati.it43.com.conf
+    8. wget --no-check-certificate 'https://docs.google.com/uc?export=download&id=1Sqf0TIiybYyUp5nyab4twy9svkgq8bi7' -O lb.zip
+    9. unzip lb.zip  -d  lb
+    10. mv lb/* /var/www/pasopati.it43.com
+    11. cp /var/www/pasopati.it43.com/worker/index.php /var/www/pasopati.it43.com/index.php
+    12. cp /var/www/pasopati.it43.com/index.php /var/www/html/index.php
+    13. rm /var/www/html/index.html
+    14. service apache2 restart
+
+confapa.sh
+```
+#!/bin/bash
+
+cat <<EOL > /etc/apache2/ports.conf
+listen 80
+EOL
+
+mkdir -p /var/www/pasopati.it43.com
+
+service apache2 reload && service apache2 start
+
+a2ensite pasopati.it43.com.conf
+
+wget --no-check-certificate 'https://docs.google.com/uc?export=download&id=1Sqf0TIiybYyUp5nyab4twy9svkgq8bi7' -O lb.zip
+
+unzip lb.zip -d lb
+
+mv lb/* /var/www/pasopati.it43.com
+
+cp /var/www/pasopati.it43.com/worker/index.php /var/www/pasopati.it43.com/index.php
+
+cp /var/www/pasopati.it43.com/index.php /var/www/html/index.php
+
+rm /var/www/html/index.html
+
+service apache2 restart
+
+echo "Konfigurasi selesai!"
+
+```
+Di client :
+
+    1. apt install lynx
+    2. lynx pasopati.it43.com atau lynx 192.238.1.6 
+
+![image](https://github.com/user-attachments/assets/57445bb3-c09c-4191-9edd-4e8f97fab5a6)
