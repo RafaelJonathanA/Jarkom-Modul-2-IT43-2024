@@ -254,8 +254,8 @@ service bind9 restart
 
 echo "Konfigurasi selesai!"
 ```
-
-1. Untuk mempersiapkan peperangan World War MMXXIV (Iya sebanyak itu), Sriwijaya membuat dua kotanya menjadi web server yaitu Tanjungkulai, dan Bedahulu, serta Sriwijaya sendiri akan menjadi DNS Master. Kemudian karena merasa terdesak, Majapahit memberikan bantuan dan menjadikan kerajaannya (Majapahit) menjadi DNS Slave. 
+## 1
+Untuk mempersiapkan peperangan World War MMXXIV (Iya sebanyak itu), Sriwijaya membuat dua kotanya menjadi web server yaitu Tanjungkulai, dan Bedahulu, serta Sriwijaya sendiri akan menjadi DNS Master. Kemudian karena merasa terdesak, Majapahit memberikan bantuan dan menjadikan kerajaannya (Majapahit) menjadi DNS Slave. 
 
 ![image](https://github.com/user-attachments/assets/e1d90912-9ea0-4c01-a03e-5950c4c28fef)
 
@@ -346,7 +346,8 @@ Di Node lain semuanya:
     3. echo nameserver 192.238.1.2 >> /etc/resolv.conf
     4. echo nameserver 192.238.2.2 >> /etc/resolv.conf 
 
-2. Karena para pasukan membutuhkan koordinasi untuk melancarkan serangannya, maka buatlah sebuah domain yang mengarah ke Solok dengan alamat sudarsana.xxxx.com dengan alias www.sudarsana.xxxx.com, dimana xxxx merupakan kode kelompok. Contoh: sudarsana.it01.com.
+## 2
+Karena para pasukan membutuhkan koordinasi untuk melancarkan serangannya, maka buatlah sebuah domain yang mengarah ke Solok dengan alamat sudarsana.xxxx.com dengan alias www.sudarsana.xxxx.com, dimana xxxx merupakan kode kelompok. Contoh: sudarsana.it01.com.
 
 Di Sriwijaya :
 
@@ -382,8 +383,8 @@ $TTL    604800
 @       IN      AAAA    ::1
 www     IN      CNAME   sudarsana.it43.com.
 ```
-
-3. Para pasukan juga perlu mengetahui mana titik yang akan diserang, sehingga dibutuhkan domain lain yaitu pasopati.xxxx.com dengan alias www.pasopati.xxxx.com yang mengarah ke Kotalingga.
+## 3
+Para pasukan juga perlu mengetahui mana titik yang akan diserang, sehingga dibutuhkan domain lain yaitu pasopati.xxxx.com dengan alias www.pasopati.xxxx.com yang mengarah ke Kotalingga.
 
 Di Sriwijaya :
 
@@ -419,7 +420,8 @@ $TTL    604800
 @       IN      AAAA    ::1
 www     IN      CNAME   pasopati.it43.com.
 ```
-4. Markas pusat meminta dibuatnya domain khusus untuk menaruh informasi persenjataan dan suplai yang tersebar. Informasi dan suplai meme terbaru tersebut mengarah ke Tanjungkulai dan domain yang ingin digunakan adalah rujapala.xxxx.com dengan alias www.rujapala.xxxx.com. 
+## 4
+Markas pusat meminta dibuatnya domain khusus untuk menaruh informasi persenjataan dan suplai yang tersebar. Informasi dan suplai meme terbaru tersebut mengarah ke Tanjungkulai dan domain yang ingin digunakan adalah rujapala.xxxx.com dengan alias www.rujapala.xxxx.com. 
 
 Di Sriwijaya :
 
@@ -457,8 +459,8 @@ $TTL    604800
 @       IN      AAAA    ::1
 www     IN      CNAME   rujapala.it43.com.
 ```
-
-5. Pastikan domain-domain tersebut dapat diakses oleh seluruh komputer (client) yang berada di Nusantara.
+## 5
+Pastikan domain-domain tersebut dapat diakses oleh seluruh komputer (client) yang berada di Nusantara.
 Pastikan : nano /etc/resolv.conf 
 ```
     nameserver 192.238.1.2
@@ -476,7 +478,8 @@ Hasil Ping Pada HayamWuruk :
 ![image](https://github.com/user-attachments/assets/b64ffda2-8f7a-454c-8c7c-45f054ed343e)
 ![image](https://github.com/user-attachments/assets/a6ca8f81-3a07-40ea-8974-d7704254a37b)
 
-6. Beberapa daerah memiliki keterbatasan yang menyebabkan hanya dapat mengakses domain secara langsung melalui alamat IP domain tersebut. Karena daerah tersebut tidak diketahui secara spesifik, pastikan semua komputer (client) dapat mengakses domain pasopati.xxxx.com melalui alamat IP Kotalingga (Notes: menggunakan pointer record).
+## 6
+Beberapa daerah memiliki keterbatasan yang menyebabkan hanya dapat mengakses domain secara langsung melalui alamat IP domain tersebut. Karena daerah tersebut tidak diketahui secara spesifik, pastikan semua komputer (client) dapat mengakses domain pasopati.xxxx.com melalui alamat IP Kotalingga (Notes: menggunakan pointer record).
 
 DI Sriwijaya: 
 
@@ -510,7 +513,8 @@ $TTL    604800
 ![image](https://github.com/user-attachments/assets/d0c1fd9c-6493-4a4b-b5b8-8edfd283a344)
 
 
-7. Akhir-akhir ini seringkali terjadi serangan brainrot ke DNS Server Utama, sebagai tindakan antisipasi kamu diperintahkan untuk membuat DNS Slave di Majapahit untuk semua domain yang sudah dibuat sebelumnya yang mengarah ke Sriwijaya.
+## 7
+Akhir-akhir ini seringkali terjadi serangan brainrot ke DNS Server Utama, sebagai tindakan antisipasi kamu diperintahkan untuk membuat DNS Slave di Majapahit untuk semua domain yang sudah dibuat sebelumnya yang mengarah ke Sriwijaya.
 
 Di Sriwijaya :
 
@@ -586,7 +590,8 @@ Mencoba ping di client setelah bind9 sriwijaya mati
 
 ![image](https://github.com/user-attachments/assets/53fb22d5-76d1-4a7f-9ea9-53a0ae3c8ccc)
 
-8. Kamu juga diperintahkan untuk membuat subdomain khusus melacak kekuatan tersembunyi di Ohio dengan subdomain cakra.sudarsana.xxxx.com yang mengarah ke Bedahulu.
+## 8
+Kamu juga diperintahkan untuk membuat subdomain khusus melacak kekuatan tersembunyi di Ohio dengan subdomain cakra.sudarsana.xxxx.com yang mengarah ke Bedahulu.
 
 Di Sriwijaya :
 
@@ -617,7 +622,8 @@ Di client:
 
 ![image](https://github.com/user-attachments/assets/722733d6-33cc-40c7-8a86-fea82d28a4bc)
 
-9. Karena terjadi serangan DDOS oleh shikanoko nokonoko koshitantan (NUN), sehingga sistem komunikasinya terhalang. Untuk melindungi warga, kita diperlukan untuk membuat sistem peringatan dari siren man oleh Frekuensi Freak dan memasukkannya ke subdomain panah.pasopati.xxxx.com dalam folder panah dan pastikan dapat diakses secara mudah dengan menambahkan alias www.panah.pasopati.xxxx.com dan mendelegasikan subdomain tersebut ke Majapahit dengan alamat IP menuju radar di Kotalingga.
+## 9
+Karena terjadi serangan DDOS oleh shikanoko nokonoko koshitantan (NUN), sehingga sistem komunikasinya terhalang. Untuk melindungi warga, kita diperlukan untuk membuat sistem peringatan dari siren man oleh Frekuensi Freak dan memasukkannya ke subdomain panah.pasopati.xxxx.com dalam folder panah dan pastikan dapat diakses secara mudah dengan menambahkan alias www.panah.pasopati.xxxx.com dan mendelegasikan subdomain tersebut ke Majapahit dengan alamat IP menuju radar di Kotalingga.
 
 Di Sriwijaya: 
 
@@ -719,7 +725,8 @@ Di client server :
 
 ![image](https://github.com/user-attachments/assets/04ce72d1-6c51-47e6-9a36-4ac49cf21806)
 
-10. Markas juga meminta catatan kapan saja meme brain rot akan dijatuhkan, maka buatlah subdomain baru di subdomain panah yaitu log.panah.pasopati.xxxx.com serta aliasnya www.log.panah.pasopati.xxxx.com yang juga mengarah ke Kotalingga.
+## 10
+Markas juga meminta catatan kapan saja meme brain rot akan dijatuhkan, maka buatlah subdomain baru di subdomain panah yaitu log.panah.pasopati.xxxx.com serta aliasnya www.log.panah.pasopati.xxxx.com yang juga mengarah ke Kotalingga.
 
 Di Majapahit :
 
@@ -753,7 +760,9 @@ Di client Server :
     2. ping www.log.panah.pasopati.it43.com
 ![image](https://github.com/user-attachments/assets/1a622523-e684-4e8a-ba1a-6d06873fb1a9)
 
-11. Setelah pertempuran mereda, warga IT dapat kembali mengakses jaringan luar dan menikmati meme brainrot terbaru, tetapi hanya warga Majapahit saja yang dapat mengakses jaringan luar secara langsung. Buatlah konfigurasi agar warga IT yang berada diluar Majapahit dapat mengakses jaringan luar melalui DNS Server Majapahit.
+
+## 11
+Setelah pertempuran mereda, warga IT dapat kembali mengakses jaringan luar dan menikmati meme brainrot terbaru, tetapi hanya warga Majapahit saja yang dapat mengakses jaringan luar secara langsung. Buatlah konfigurasi agar warga IT yang berada diluar Majapahit dapat mengakses jaringan luar melalui DNS Server Majapahit.
 
 Di Majapahit/Sriwijaya :
 
@@ -778,7 +787,9 @@ DI Client :
 
 ![image](https://github.com/user-attachments/assets/cf160245-5bf7-434b-ab4c-28aed42aa6f9)
 
-12. Karena pusat ingin sebuah laman web yang ingin digunakan untuk memantau kondisi kota lainnya maka deploy laman web ini (cek resource yg lb) pada Kotalingga menggunakan apache.
+
+## 12 
+Karena pusat ingin sebuah laman web yang ingin digunakan untuk memantau kondisi kota lainnya maka deploy laman web ini (cek resource yg lb) pada Kotalingga menggunakan apache.
 
 Di kotalingga :
 
@@ -856,7 +867,9 @@ Di client :
 
 ![image](https://github.com/user-attachments/assets/57445bb3-c09c-4191-9edd-4e8f97fab5a6)
 
-13. Karena Sriwijaya dan Majapahit memenangkan pertempuran ini dan memiliki banyak uang dari hasil penjarahan (sebanyak 35 juta, belum dipotong pajak) maka pusat meminta kita memasang load balancer untuk membagikan uangnya pada web nya, dengan Kotalingga, Bedahulu, Tanjungkulai sebagai worker dan Solok sebagai Load Balancer menggunakan apache sebagai web server nya dan load balancer nya.
+
+## 13
+Karena Sriwijaya dan Majapahit memenangkan pertempuran ini dan memiliki banyak uang dari hasil penjarahan (sebanyak 35 juta, belum dipotong pajak) maka pusat meminta kita memasang load balancer untuk membagikan uangnya pada web nya, dengan Kotalingga, Bedahulu, Tanjungkulai sebagai worker dan Solok sebagai Load Balancer menggunakan apache sebagai web server nya dan load balancer nya.
 
 Di Solok :
     
@@ -926,7 +939,9 @@ Di Client :
 ![image](https://github.com/user-attachments/assets/befccfb5-5229-4cf3-be29-df60eedcec62)
 
 
-14. Selama melakukan penjarahan mereka melihat bagaimana web server luar negeri, hal ini membuat mereka iri, dengki, sirik dan ingin flexing sehingga meminta agar web server dan load balancer nya diubah menjadi nginx.
+
+## 14
+Selama melakukan penjarahan mereka melihat bagaimana web server luar negeri, hal ini membuat mereka iri, dengki, sirik dan ingin flexing sehingga meminta agar web server dan load balancer nya diubah menjadi nginx.
 
 
 Di Webserver :
@@ -1062,7 +1077,9 @@ DI Client :
 
 ![image](https://github.com/user-attachments/assets/988fc807-b8ea-4cc3-934e-2370fb5aed82)
 
-15. Markas pusat meminta laporan hasil benchmark dengan menggunakan apache benchmark dari load balancer dengan 2 web server yang berbeda tersebut dan meminta secara detail dengan ketentuan:
+
+## 15 
+Markas pusat meminta laporan hasil benchmark dengan menggunakan apache benchmark dari load balancer dengan 2 web server yang berbeda tersebut dan meminta secara detail dengan ketentuan:
 - Nama Algoritma Load Balancer
 - Report hasil testing apache benchmark 
 - Grafik request per second untuk masing masing algoritma. 
@@ -1264,3 +1281,278 @@ Analis :
     Round Robin Nginx juga memberikan performa yang sangat baik dengan requests per second yang tinggi dan waktu permintaan yang cepat. Ini adalah pilihan yang seimbang, namun sedikit kurang efisien dibandingkan IP-Hash dalam skenario ini.
 
     Least Conn Nginx menunjukkan performa terendah dalam hal requests per second, time per request, dan transfer rate. Meskipun stabil dan memiliki waktu pemrosesan yang cepat, algoritma ini mungkin kurang optimal untuk skenario yang memerlukan distribusi beban secara merata.
+
+
+# Revisi 
+## 16
+Karena dirasa kurang aman dari brainrot karena masih memakai IP, markas ingin akses ke Solok memakai solok.xxxx.com dengan alias www.solok.xxxx.com (sesuai web server terbaik hasil analisis kalian).
+
+Di Sriwijaya :
+    
+    1.nano /etc/bind/named.conf.local 
+```
+zone "solok.it43.com" {
+    type master;
+    file "/etc/bind/it43/solok.it43.com";
+};
+```
+    2. cp /etc/bind/db.local /etc/bind/it43/solok.it43.com
+    3. nano /etc/bind/it43/solok.it43.com
+```
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     solok.it43.com. root.solok.it43.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      solok.it43.com.
+@       IN      A       192.238.1.4
+@       IN      AAAA    ::1
+www     IN      CNAME   solok.it43.com.
+```
+    4. service bind9 restart
+
+Di Tanjungkulai :
+    
+    1. nano /etc/nginx/sites-available/rujapala.it43.com
+```
+server {
+    listen 80;
+
+    root /var/www/rujapala.it43.com;
+
+    index index.php index.html index.htm;
+    server_name _ rujapala.it43.com solok.it43.com www.rujapala.it43.com www.solok.it43.com;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    # pass PHP scripts to FastCGI server
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+}
+```
+    2. service nginx restart
+
+Hasil :
+
+![image](https://github.com/user-attachments/assets/39638078-d803-4004-af58-b5df62439cc7)
+
+## 17 
+Agar aman, buatlah konfigurasi agar solok.xxx.com hanya dapat diakses melalui port sebesar π x 10^3 = (phi nya desimal) dan 2000 + 2000 log 10 (10) +700 - π = ?.
+
+π=3,14 
+port : 3,14 x 10000 = 31400
+
+2000 + 2000 (1) + 700 - 3,14 = 4696,86 kita bulatkan jadi 4696 
+
+Di Tanjungkulai :
+
+    1. nano /etc/nginx/sites-available/rujapala.it43.com
+```
+server {
+    listen 31400;
+
+    root /var/www/rujapala.it43.com;
+
+    index index.php index.html index.htm;
+    server_name _ rujapala.it43.com solok.it43.com www.rujapala.it43.com www.solok.it43.com;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    # pass PHP scripts to FastCGI server
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+}
+
+server {
+    listen 4696;
+
+    root /var/www/rujapala.it43.com;
+
+    index index.php index.html index.htm;
+    server_name _ rujapala.it43.com solok.it43.com www.rujapala.it43.com www.solok.it43.com;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    # pass PHP scripts to FastCGI server
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+}
+```
+    3. service nginx restart
+
+Hasil :
+
+Di HayamWuruk: 
+
+    1. lynx solok.it43.com:31400
+
+![image](https://github.com/user-attachments/assets/0b16ff7c-8ada-4a4c-801e-3217a2aa7222)
+
+    2. lynx solok.it43.com:4696
+![image](https://github.com/user-attachments/assets/e8b12230-88cc-41d2-9858-d48257a6534c)
+
+## 18 
+Apa bila ada yang mencoba mengakses IP mylta akan secara otomatis dialihkan ke www.solok.xxxx.com.
+
+
+Di Solok :
+    
+    1. apt-get install php-fpm -y
+    2. nano /etc/nginx/sites-available/solok
+```
+upstream webserver  {
+    server 192.238.1.4;
+    server 192.238.1.5;
+    server 192.238.1.6;
+}
+
+server {
+    listen 80;
+    server_name _;
+
+    location / {
+        proxy_pass http://webserver;
+    }
+}
+
+server {
+    listen 80;
+
+    root /var/www/html;
+
+    index index.php index.html index.htm;
+    server_name www.solok.it43.com;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    # pass PHP scripts to FastCGI server
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+}
+
+server {
+    listen 31400 default_server;
+    server_name _;
+    return 301 http://www.solok.it43.com;
+}
+```
+Jangan Lupa untuk mengganti server listen di kotalingga ke 80 agar bisa connnect 
+
+    3. service nginx restart
+
+Hasil :
+Di HayamWuruk :
+
+![image](https://github.com/user-attachments/assets/b8419f59-4600-40fc-8c38-6a63dd16c114)
+
+## 19 
+Karena probset sudah kehabisan ide masuk ke salah satu worker buatkan akses direktori listing yang mengarah ke resource worker2.
+
+    1. nano /etc/bind/named.conf.local
+```
+zone "sekiantterimakasih.it43.com" {
+    type master;
+    file "/etc/bind/it43/sekiantterimakasih.it43.com";
+};
+```
+    2. cp /etc/bind/db.local /etc/bind/it43/sekiantterimakasih.it43.com
+    3. nano /etc/bind/it43/sekiantterimakasih.it43.com
+```
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     sekiantterimakasih.it43.com. root.sekiantterimakasih.it43.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      sekiantterimakasih.it43.com.
+@       IN      A       192.238.1.5
+www     IN      CNAME   sekiantterimakasih.it43.com.
+```
+    4. service bind9 restart 
+
+Di Bendahulu: 
+    
+    1. nano /etc/nginx/sites-available/cakra.sudarsana.it43.com 
+```
+server {
+    listen 80;
+    server_name sekiantterimakasih.it43.com www.sekiantterimakasih.it43.com;
+
+    root /var/www/sekiantterimakasih.it43.com/dir-listing/worker2;
+    index index.php index.html index.htm;
+
+    location / {
+        autoindex on;
+        try_files $uri $uri/ =404;
+    }
+}
+```
+    2. wget --no-check-certificate 'https://docs.google.com/uc?export=download&id=1JGk8b-tZgzAOnDqTx5B3F9qN6AyNs7Zy' -O dir-listing.zip
+
+    3. unzip dir-listing.zip -d dir-listing
+
+    4. mkdir /var/www/sekiantterimakasih.it43.com
+
+    5. mv dir-listing/* /var/www/sekiantterimakasih.it43.com
+
+    6. service nginx restart 
+
+    7. ln -s /etc/nginx/sites-available/cakra.sudarsana.it43.com /etc/nginx/sites-enabled/cakra.sudarsana.it43.com
+    
+    8. rm /etc/nginx/sites-enabled/default
+
+## 20 
+Worker tersebut harus dapat di akses dengan sekiantterimakasih.xxxx.com dengan alias www.sekiantterimakasih.xxxx.com.
+
+Di HayamWuruk 
+
+    lynx sekiantterimakasih.it43.com 
+
+![image](https://github.com/user-attachments/assets/c49a37a3-ac1a-4a80-aa67-5280da4e3c98)
+
+    lynx www.sekiantterimakasih.it43.com 
+
+![image](https://github.com/user-attachments/assets/034d5ab8-2c84-4b22-a6c9-ede8949cae8e)
